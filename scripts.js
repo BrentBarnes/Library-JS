@@ -21,12 +21,17 @@ function validateForm() {
 }
 
 function load() {
-  if (sessionStorage.myLibrary == undefined) return;
+  debugger;
+  if (sessionStorage.myLibrary == "undefined") {
+    this.libraryBooks = [];
+    return
+  }
 
-  array = JSON.parse(sessionStorage.myLibrary);
+  return JSON.parse(sessionStorage.myLibrary);
 }
 
-let libraryBooks = load();
+let libraryBooks = load()
+
 
 function Book(title, author, pages, read) {
   this.title = title
@@ -49,10 +54,10 @@ bookSubmit.addEventListener('click', (event) => {
     bookRead.value
   )
 
-  addBookToLibrary(libraryBooks, book);
-  console.log(libraryBooks);
   debugger;
-  sessionStorage.setItem("myLibrary", JSON.stringify(libraryBooks));
+  addBookToLibrary(this.libraryBooks, book);
+  console.log(this.libraryBooks);
+  sessionStorage.setItem("myLibrary", JSON.stringify(this.libraryBooks));
 });
 
 console.log(libraryBooks);
