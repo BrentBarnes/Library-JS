@@ -11,12 +11,12 @@
   
   <h1>Library App</h1>
   <div class="description">
-    <p class="top-line">This is a project for The Odin Project in whichI have to make a library using Object Constructors and LocalStorage.</p>
+    <p class="top-line">This is a project for The Odin Project in which I have to make a library using Object Constructors and LocalStorage.</p>
     <p>You can also view the GitHub Repository of this project.</p>
   </div>
   <button class="add-book-btn">+ Add Book</button>
   <div class="library">
-    <div class="book-card">
+    <!-- <div class="book-card">
       <p class="book-title">Book Title</p>
       <p class="author-name">by Author Name</p>
       <p class="page-number">Number of Pages: XXX</p>
@@ -24,6 +24,26 @@
         <button class="read-toggle">Read: Yes</button>
         <button class="remove-book-btn">Remove</button>
       </div>
+    </div> -->
+    <div class="modal-card">
+      <form method="" onsubmit="return validateForm()">
+        <p class="add-book">Add Book</p>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title">
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author">
+        <label for="pages">Pages:</label>
+        <input type="number" id="pages" name="pages">
+        <label for="read">Have you read this book?</label>
+        <input type="checkbox" id="read" name="read">
+        <input type="submit" value="submit" class="submit-book">Add!</button>
+      </form>
+    </div>
+    <div>
+      <p class="book-title"></p>
+      <p class="book-author"></p>
+      <p class="book-pages"></p>
+      <p class="book-read"></p>
     </div>
   </div>
   <script src="scripts.js"></script>
