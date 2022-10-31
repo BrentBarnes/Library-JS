@@ -9,6 +9,8 @@ const author = document.querySelector(".book-author")
 const pages = document.querySelector(".book-pages")
 const read = document.querySelector(".book-read")
 
+const bookCardsContainer = document.querySelector(".library")
+
 function validateForm() {
   if (
     bookTitle == null || bookTitle == '',
@@ -21,13 +23,14 @@ function validateForm() {
 }
 
 function load() {
-  debugger;
-  if (sessionStorage.myLibrary == "undefined") {
+  emptyLibrary = (localStorage.myLIbrary == undefined);
+
+  if (emptyLibrary) {
     this.libraryBooks = [];
     return
   }
 
-  return JSON.parse(sessionStorage.myLibrary);
+  return JSON.parse(localStorage.myLibrary);
 }
 
 let libraryBooks = load()
@@ -46,6 +49,12 @@ function addBookToLibrary(array, book) {
   }
 }
 
+function createBookDiv(booksArray) {
+  booksArray.forEach(book => {
+    console.log(book);
+  });
+}
+
 bookSubmit.addEventListener('click', (event) => {
   let book = new Book (
     bookTitle.value,
@@ -54,10 +63,8 @@ bookSubmit.addEventListener('click', (event) => {
     bookRead.value
   )
 
-  debugger;
+  // debugger;
   addBookToLibrary(this.libraryBooks, book);
-  console.log(this.libraryBooks);
-  sessionStorage.setItem("myLibrary", JSON.stringify(this.libraryBooks));
+  localStorage.setItem("myLibrary", JSON.stringify(this.libraryBooks));
+  createBookDiv(this.libraryBooks);
 });
-
-console.log(libraryBooks);
