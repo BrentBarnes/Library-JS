@@ -13,34 +13,30 @@ const bookCardsContainer = document.querySelector(".library")
 
 function validateForm() {
   if (
-    bookTitle == null || bookTitle == '',
-    bookAuthor == null || bookAuthor == '',
-    bookPages == null || bookPages == ''
+    bookTitle.value == null || bookTitle.value == '',
+    bookAuthor.value == null || bookAuthor.value == '',
+    bookPages.value == null || bookPages.value == ''
   ) {
     alert("Please fill all required fields");
     return false
   }
 }
 
-function load() {
-  emptyLibrary = (localStorage.myLIbrary == undefined);
-
-  if (emptyLibrary) {
-    this.libraryBooks = [];
-    return
-  }
-
-  return JSON.parse(localStorage.myLibrary);
+if (sessionStorage.getItem("myLibrary") == null) {
+  this.libraryBooks = []
+} else {
+  this.libraryBooks = JSON.parse(sessionStorage.myLibrary);
+  createBookDiv(this.libraryBooks);
+  this.readButtons = document.querySelectorAll(".read-toggle")
+  this.removeButtons = document.querySelectorAll(".remove-book-btn")
 }
 
-let libraryBooks = load()
-
-
-function Book(title, author, pages, read) {
+function Book(title, author, pages, read, libraryBooks) {
+  this.index = libraryBooks.length
   this.title = title
-    this.author = author
-    this.pages = pages
-    this.read = read
+  this.author = author
+  this.pages = pages
+  this.read = read
 }
 
 function addBookToLibrary(array, book) {
@@ -51,7 +47,47 @@ function addBookToLibrary(array, book) {
 
 function createBookDiv(booksArray) {
   booksArray.forEach(book => {
-    console.log(book);
+    const newDiv = document.createElement("div");
+    newDiv.classList.add("book-card");
+    newDiv.setAttribute('id',`book-index-${book.index}`);
+
+    const pTitle = document.createElement("p");
+    pTitle.classList.add("book-title");
+    pTitle.textContent = book.title;
+
+    const pAuthor = document.createElement("p");
+    pAuthor.classList.add("author-name");
+    pAuthor.textContent = `by ${book.author}`;
+
+    const pPage = document.createElement("p");
+    pPage.classList.add("page-number");
+    pPage.textContent = `Number of Pages ${book.pages}`;
+
+    const buttons = document.createElement("div");
+    
+    const read = document.createElement("button");
+    read.classList.add("read-toggle");
+    if (book.read == true) {
+      read.textContent = 'Read: Yes';
+      read.classList.add('read-true');
+    } else {
+      read.textContent = 'Read: No';
+      read.classList.add('read-false');
+    }
+
+    const remove = document.createElement("button");
+    remove.classList.add("remove-book-btn");
+    remove.textContent = "Remove"
+
+    newDiv.appendChild(pTitle);
+    newDiv.appendChild(pAuthor);
+    newDiv.appendChild(pPage);
+    newDiv.appendChild(buttons);
+
+    buttons.appendChild(read);
+    buttons.appendChild(remove);
+
+    bookCardsContainer.appendChild(newDiv);
   });
 }
 
@@ -60,11 +96,33 @@ bookSubmit.addEventListener('click', (event) => {
     bookTitle.value,
     bookAuthor.value,
     bookPages.value,
-    bookRead.value
+    bookRead.checked,
+    (this.libraryBooks)
   )
 
-  // debugger;
   addBookToLibrary(this.libraryBooks, book);
-  localStorage.setItem("myLibrary", JSON.stringify(this.libraryBooks));
-  createBookDiv(this.libraryBooks);
+  sessionStorage.setItem("myLibrary", JSON.stringify(this.libraryBooks));
 });
+
+for (const readButton of this.readButtons) {
+  readButton.addEventListener('click', (event) => {
+    if (readButton.classList.contains("read-true")) {
+      readButton.classList.replace('read-true', 'read-false');
+      readButton.textContent = 'Read: No';
+    } else {
+      readButton.classList.replace('read-false', 'read-true');
+      readButton.textContent = 'Read: Yes';
+    }
+  });
+}
+
+for (const removeButton of this.removeButtons) {
+  removeButton.addEventListener('click', (event) => {
+    const selectedBook = (book) => book.title == removeButton.parentNode.previousSibling.previousSibling.previousSibling.textContent;
+    let bookIndex = this.libraryBooks.findIndex(selectedBook);
+    let removedBook = document.getElementById(`book-index-${bookIndex}`);
+    removedBook.remove();
+    this.libraryBooks.splice(bookIndex, 1)
+    sessionStorage.setItem("myLibrary", JSON.stringify(this.libraryBooks));
+  });
+}

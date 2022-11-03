@@ -115,7 +115,6 @@ body {
 }
 
 .read-toggle {
-  background-color: #4CAF50;
   border: none;
   color: white;
   padding: .25rem .5rem;
@@ -126,8 +125,21 @@ body {
   border-radius: 20px;
 }
 
-.read-toggle:hover {
+.read-true {
+  background-color: #4CAF50;
+}
+
+.read-true:hover {
   background-color: #337a35;
+  cursor: pointer;
+}
+
+.read-false {
+  background-color: rgb(253, 69, 69);
+}
+
+.read-false:hover {
+  background-color: rgb(221, 66, 66);
   cursor: pointer;
 }
 
