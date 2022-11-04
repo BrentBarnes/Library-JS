@@ -82,6 +82,78 @@ body {
   padding-bottom: 1rem;
 }
 
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  border: 1px solid black;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: white;
+  width: 500px;
+  max-width: 80%;
+}
+
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-flex {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.modal-header .title {
+  font-size: 1.25 rem;
+  font-weight: bold;
+}
+
+.modal-header .close-button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modal-body {
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+#overlay {
+  position: fixed;
+  opacity: 0;
+  transition: 200ms ease-in-out;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .5);
+  pointer-events: none;
+}
+
+#overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.check-container {
+  display: flex;
+}
+
 .library {
   display: flex;
   padding-top: 2rem;
@@ -142,23 +214,6 @@ body {
   background-color: rgb(221, 66, 66);
   cursor: pointer;
 }
-
-/* .read-toggle {
-  background-color: rgb(253, 69, 69);
-  border: none;
-  color: white;
-  padding: .25rem .5rem;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  border-radius: 20px;
-}
-
-.read-toggle:hover {
-  background-color: rgb(221, 66, 66);
-  cursor: pointer;
-} */
 
 .remove-book-btn {
   background-color: rgb(253, 69, 69);

@@ -11,26 +11,37 @@
   
   <h1>Library App</h1>
   <div class="description">
-    <p class="top-line">This is a project for The Odin Project in which I have to make a library using Object Constructors and LocalStorage.</p>
-    <p>You can also view the GitHub Repository of this project.</p>
+    <p class="top-line">This is a project for <a href="https://www.theodinproject.com/lessons/javascript-library">The Odin Project</a> in which I have to make a library using Object Constructors and SessionStorage.</p>
+    <p>You can also view the <a href="https://github.com/BrentBarnes/Library-JS">GitHub Repository</a> of this project.</p>
   </div>
-  <button class="add-book-btn">+ Add Book</button>
-  <div class="modal-card">
-    <form method="" onsubmit="return validateForm()">
-      <p class="add-book">Add Book</p>
-      <label for="title">Title:</label>
-      <input type="text" id="title" name="title">
-      <label for="author">Author:</label>
-      <input type="text" id="author" name="author">
-      <label for="pages">Pages:</label>
-      <input type="number" id="pages" name="pages">
-        <label for="read">Have you read this book?</label>
-        <input type="hidden" name="read">
-        <input type="checkbox" id="read" name="read">
-        <input type="submit" value="submit" class="submit-book"></button>
-    </form>
+  <button data-modal-target="#modal" class="add-book-btn">+ Add Book</button>
+
+  <div class="modal" id="modal">
+    <div class="modal-flex">
+      <div class="modal-header">
+        <div class="title">Add Book</div>
+        <button data-close-button class="close-button">&times;</button>
+      </div>
+      <form method="" onsubmit="return validateForm()">
+        <div class="modal-body">
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title">
+          <label for="author">Author:</label>
+          <input type="text" id="author" name="author">
+          <label for="pages">Pages:</label>
+          <input type="number" id="pages" name="pages">
+          <div class="check-container">
+            <label for="read">Have you read this book?</label>
+            <input type="checkbox" id="read" name="read">
+          </div>
+          <input type="submit" value="submit" class="submit-book"></button>
+        </div>
+      </form>
+    </div>
   </div>
-    
+
+  <div id="overlay"></div>
+
   <div class="library">
     
   </div>

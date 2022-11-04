@@ -1,3 +1,7 @@
+const openModalButtons = document.querySelectorAll('[data-modal-target]')
+const closeModalButtons = document.querySelectorAll('[data-close-button]')
+const overlay = document.getElementById('overlay')
+
 const bookTitle = document.querySelector("#title")
 const bookAuthor = document.querySelector("#author")
 const bookPages = document.querySelector("#pages")
@@ -10,6 +14,38 @@ const pages = document.querySelector(".book-pages")
 const read = document.querySelector(".book-read")
 
 const bookCardsContainer = document.querySelector(".library")
+
+openModalButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const modal = document.querySelector(button.dataset.modalTarget);
+    openModal(modal);
+  })
+})
+
+overlay.addEventListener('click', () => {
+  const modals = document.querySelectorAll('.modal.active');
+  modals.forEach(modal => {
+    closeModal(modal);
+  })
+})
+
+closeModalButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const modal = button.closest('.modal');
+    closeModal(modal);
+  })
+})
+
+function openModal(modal) {
+  if (modal == null) return
+  modal.classList.add('active');
+  overlay.classList.add('active');
+}
+
+function closeModal(modal) {
+  modal.classList.remove('active');
+  overlay.classList.remove('active');
+}
 
 function validateForm() {
   if (
@@ -31,8 +67,7 @@ if (sessionStorage.getItem("myLibrary") == null) {
   this.removeButtons = document.querySelectorAll(".remove-book-btn")
 }
 
-function Book(title, author, pages, read, libraryBooks) {
-  this.index = libraryBooks.length
+function Book(title, author, pages, read) {
   this.title = title
   this.author = author
   this.pages = pages
@@ -97,7 +132,6 @@ bookSubmit.addEventListener('click', (event) => {
     bookAuthor.value,
     bookPages.value,
     bookRead.checked,
-    (this.libraryBooks)
   )
 
   addBookToLibrary(this.libraryBooks, book);
@@ -118,9 +152,12 @@ for (const readButton of this.readButtons) {
 
 for (const removeButton of this.removeButtons) {
   removeButton.addEventListener('click', (event) => {
-    const selectedBook = (book) => book.title == removeButton.parentNode.previousSibling.previousSibling.previousSibling.textContent;
+    // const selectedBook = (book) => book.title == removeButton.parentNode.previousSibling.previousSibling.previousSibling.textContent;
+    debugger;
+    const selectedBook = (book) => book.title == removeButton.closest('.book-card').firstChild.textContent;
     let bookIndex = this.libraryBooks.findIndex(selectedBook);
-    let removedBook = document.getElementById(`book-index-${bookIndex}`);
+    // let removedBook = document.getElementById(`book-index-${bookIndex}`);
+    let removedBook = removeButton.closest('.book-card')
     removedBook.remove();
     this.libraryBooks.splice(bookIndex, 1)
     sessionStorage.setItem("myLibrary", JSON.stringify(this.libraryBooks));
