@@ -13,9 +13,3 @@ This is a project from The Odin Project's Javascript curriculum. This was my fir
 ### Video Demo
 
 ![Library Video](library.gif)
-
-### Challenges While Learning
-
-- The checkbox and read button
-- Selecting the right DOM elements for read button and remove button
-- 
